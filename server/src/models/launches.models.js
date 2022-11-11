@@ -1,5 +1,6 @@
 // Map is same as object, but keys can be numbers, function
 // order of keys are preserved and guaranteed
+const lauches = require('./launches.mongo');
 const launches = new Map();
 
 let latestFlightNumber = 100;
