@@ -22,11 +22,13 @@ const launchesSchema = new mongoose.Schema({
     required: true,
   },
   target: {
-    type: mongoose.ObjectId,
+    type: String,
+    // TODO: didn't work with the type below
+    // type: mongoose.Types.ObjectId,
     // reference to Planet schema
-    ref: 'Planet'
+    // ref: 'Planet',
   },
-  customer: [String],
+  customers: [String],
   upcoming: {
     type: Boolean,
     required: true,
