@@ -2,23 +2,8 @@
 // order of keys are preserved and guaranteed
 const launchesDatabase = require('./launches.mongo');
 const planets = require('./planets.mongo');
-const launches = new Map();
 
 const DEFAULT_FLIGHT_NUMBER = 100;
-
-const launch = {
-  flightNumber: 100,
-  mission: 'Kepler',
-  rocket: 'Explorer',
-  launchDate: new Date(),
-  target: 'test b',
-  customers: ['ZTM', 'NASA'],
-  upcoming: true,
-  success: true,
-};
-
-launches.set(launch.flightNumber, launch);
-// lauches.get(100)
 
 async function getLatestFlightNumber() {
   // in .sort() we added '-' to sort descending
@@ -57,8 +42,8 @@ async function saveLaunch(launch) {
   }
 }
 
-function existsLaunchWithId(launchId) {
-  return launches.has(launchId);
+async function existsLaunchWithId(launchId) {
+  return await launchesDatabase.findOne({ flightNumber: launchId });
 }
 
 async function scheduledNewLaunch(launch) {
@@ -76,11 +61,20 @@ async function scheduledNewLaunch(launch) {
   return newLaunch;
 }
 
-function abortLaunchById(launchId) {
-  const aborted = launches.get(launchId);
-  aborted.upcoming = false;
-  aborted.success = false;
-  return aborted;
+async function abortLaunchById(launchId) {
+  // this one not actually removing, but just updating
+  // to remove completely from DB use e.g. .findOneAndRemove()
+  const aborted = await launchesDatabase.updateOne(
+    {
+      flightNumber: launchId,
+    },
+    {
+      upcoming: false,
+      success: false,
+    }
+  );
+  console.log(aborted);
+  return aborted.modifiedCount === 1;
 }
 
 module.exports = {
