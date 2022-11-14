@@ -3,8 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 
-const planetsRequest = require('./routes/planets/planets.router');
-const launchesRequest = require('./routes/lauches/lauches.router');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -19,8 +18,7 @@ app.use(
 app.use(express.json());
 // serve built React app
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use('/planets', planetsRequest);
-app.use('/launches', launchesRequest);
+app.use('/v1', api);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
