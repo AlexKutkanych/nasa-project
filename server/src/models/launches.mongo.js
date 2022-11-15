@@ -23,6 +23,7 @@ const launchesSchema = new mongoose.Schema({
   },
   target: {
     type: String,
+    required: false,
     // TODO: didn't work with the type below
     // type: mongoose.Types.ObjectId,
     // reference to Planet schema

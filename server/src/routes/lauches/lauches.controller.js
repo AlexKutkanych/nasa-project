@@ -4,9 +4,15 @@ const {
   existsLaunchWithId,
   abortLaunchById,
 } = require('../../models/launches.models');
+const { getPagination } = require('../../services/query');
 
 async function httpGetAllLaunches(req, res) {
-  return res.status(200).json(await getAllLaunches());
+  try {
+    const { skip, limit } = getPagination(req.query);
+    return res.status(200).json(await getAllLaunches(skip, limit));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function httpAddNewLaunch(req, res) {
@@ -22,7 +28,7 @@ async function httpAddNewLaunch(req, res) {
       error: 'Missing required launch property',
     });
   }
-  console.log(launch);
+  // console.log(launch);
   launch.launchDate = new Date(launch.launchDate);
   if (isNaN(launch.launchDate)) {
     return res.status(400).json({
