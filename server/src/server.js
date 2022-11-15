@@ -1,4 +1,5 @@
 const http = require('http');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const app = require('./app');
 
@@ -8,7 +9,7 @@ const { loadLaunchData } = require('./models/launches.models');
 const server = http.createServer(app);
 
 const PORT = process.env.PORT || 8000;
-const MONGO_URL = 'mongodb+srv://Alex:test123@nasacluster.vyu9xo9.mongodb.net/?retryWrites=true&w=majority';
+const MONGO_URL = process.env.MONGO_URL;
 
 // event emitter
 mongoose.connection.once('open', () => {
