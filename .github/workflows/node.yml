@@ -2,22 +2,22 @@ name: NASA project CI
 on:
   push:
     branches: [master]
-  pull_request: 
+  pull_request:
     branches: [master]
 jobs:
   build:
     env:
       CI: true
       MONGO_URL: mongodb://localhost/nasa
-    strategy: 
-      matrix: 
+    strategy:
+      matrix:
         node-version: [14.x, 16.x]
         mongodb-version: ['5.0']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.5.0
       - name: Use Node.js version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.5.1
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use MongoDB with steps
