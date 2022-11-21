@@ -1,0 +1,5 @@
+# exclude this from Docker image
+.git
+*/node_modules
+
+server/public
