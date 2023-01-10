@@ -1,0 +1,146 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "NASA Project",
+    "description": "NASA Project API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/v1/planets": {
+      "get": {
+        "tags": ["Planets"],
+        "summary": "Get all planets",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Planets"
+            }
+          }
+        }
+      }
+    },
+    "/v1/launches": {
+      "get": {
+        "tags": ["Launches"],
+        "summary": "Get all launches",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Launches"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Launches"],
+        "summary": "Create launch",
+        "parameters": {
+          "mission": "mission name",
+          "rocket": "mission name",
+          "target": "mission name",
+          "launchDate": "mission name"
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Launch"
+            }
+          }
+        }
+      }
+    },
+    "/v1/launches/{id}": {
+      "delete": {
+        "tags": ["Launches"],
+        "summary": "Delete launch by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeletesLaunch"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Planet": {
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "keplerName": {
+          "type": "string"
+        }
+      }
+    },
+    "Planets": {
+      "type": "array",
+      "$ref": "#/definitions/Planet"
+    },
+    "Launch": {
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "flightNumber": {
+          "type": "number"
+        },
+        "launchDate": {
+          "type": "string"
+        },
+        "mission": {
+          "type": "string"
+        },
+        "rocket": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "upcoming": {
+          "type": "boolean"
+        },
+        "customers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Launches": {
+      "type": "array",
+      "$ref": "#/definitions/Launch"
+    },
+    "DeletesLaunch": {
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    }
+
+  }
+}
